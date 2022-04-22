@@ -1,0 +1,48 @@
+Cloud Computing:
+
+Train the facial recognition model with our faces
+Capture videos and store in S3 (I think every 0.5 seconds)
+Get response from each video uploaded
+Updating DynamoDB with our information (name, major, and year)
+Lambda functions to perform facial recognition from video and return the result (query DynamoDB and return name, major, and year)
+Docker container part
+
+def capture_and_send_to_S3:
+	Capture video of 0.5 seconds using Python Pi camera module
+	Send that video to S3
+	Once it is processed, get the result from ____? (asynchronous)
+	Or, synchronously 
+
+
+def recognize_face_and_fetch_details(face_image_file):
+	...
+	Call eval face recognition module and get result
+	Extract the details of the recognized person from the DynamoDB
+	Return the details (name, major, year)
+
+
+def download_video_from_S3(bucket, key):
+	.
+	.
+	return ..
+
+def process video:
+	Input: 0.5 second video (.h264 format)
+	To do:
+	Extract frames
+	Take the last frame and call recognize_face_and_fetch_details function
+	Return the details (name, major, year)
+
+Dockerfile:
+https://github.com/EugeneKuz/CSE546-FallA2021/blob/master/Dockerfile
+
+
+Commands:
+ssh cc-project-group-54@192.168.0.10
+raspivid -o ~/Project/Videos/test.h264 -t 500
+ffmpeg -i ~/Project/Videos/test.h264 -r 25 ~/Project/Frames/image-%3d.jpeg
+ffmpeg -i ~/Project/Videos/test.h264 ~/Project/Frames/image-%3d.jpeg
+sudo rm Project/Frames/*
+
+
+
