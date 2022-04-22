@@ -1,4 +1,29 @@
-Cloud Computing:
+COMMANDS:
+ssh cc-project-group-54@192.168.0.10
+raspivid -o ~/Project/Videos/test.h264 -t 500
+ffmpeg -i ~/Project/Videos/test.h264 -r 25 ~/Project/Frames/image-%3d.jpeg
+ffmpeg -i ~/Project/Videos/test.h264 ~/Project/Frames/image-%3d.jpeg
+sudo rm Project/Frames/*
+
+DOCKER COMMANDS:
+--Build:
+docker build -t hello-world .
+
+--Run:
+docker run --rm hello-world
+docker run hello-world
+
+Adding --rm deletes the container after it exits
+
+--Listing containers/images:
+docker images
+docker ps
+
+--Clean up:
+docker system prune
+
+
+PROJECT DEVELOPMENT NOTES:
 
 Train the facial recognition model with our faces
 Capture videos and store in S3 (I think every 0.5 seconds)
@@ -32,17 +57,4 @@ def process video:
 	Extract frames
 	Take the last frame and call recognize_face_and_fetch_details function
 	Return the details (name, major, year)
-
-Dockerfile:
-https://github.com/EugeneKuz/CSE546-FallA2021/blob/master/Dockerfile
-
-
-Commands:
-ssh cc-project-group-54@192.168.0.10
-raspivid -o ~/Project/Videos/test.h264 -t 500
-ffmpeg -i ~/Project/Videos/test.h264 -r 25 ~/Project/Frames/image-%3d.jpeg
-ffmpeg -i ~/Project/Videos/test.h264 ~/Project/Frames/image-%3d.jpeg
-sudo rm Project/Frames/*
-
-
 
