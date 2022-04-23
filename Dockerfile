@@ -62,10 +62,12 @@ RUN python${RUNTIME_VERSION} -m pip install -r requirements.txt
 #COPY entry.sh /
 
 # Copy function code
-COPY handler.py ${FUNCTION_DIR}
+#COPY handler.py ${FUNCTION_DIR}
 #RUN chmod 777 /entry.sh
 
 COPY . .
+
+WORKDIR "${FUNCTION_DIR}face_recognition_modules/"
 
 # Set the CMD to your handler (could also be done as a parameter override outside of the Dockerfile)
 # CMD [ "handler.handler" ]
