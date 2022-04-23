@@ -23,6 +23,20 @@ docker ps
 docker system prune
 
 
+Pushing Docker image to ECR repository:
+Have the project folder and Dockerfile ready
+Create ECR repository in AWS
+Open the created repository -> View push commands
+Execute those commands to push the docker image to the ECR repository
+Issues:
+https://stackoverflow.com/questions/70828205/pushing-an-image-to-ecr-getting-retrying-in-seconds
+
+
+Working with Lambda:
+Create the necessary policies and attach
+
+
+
 PROJECT DEVELOPMENT NOTES:
 
 Train the facial recognition model with our faces
