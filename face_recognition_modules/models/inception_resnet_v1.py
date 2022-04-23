@@ -1,6 +1,6 @@
 import os
-import requests
-from requests.adapters import HTTPAdapter
+#import requests
+#from requests.adapters import HTTPAdapter
 
 import torch
 from torch import nn

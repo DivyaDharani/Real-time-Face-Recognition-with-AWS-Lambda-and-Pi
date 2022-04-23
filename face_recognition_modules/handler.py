@@ -1,5 +1,7 @@
 import sys
 import os
+from face_recognition_modules.eval_face_recognition import perform_image_recognition
+
 
 def face_recognition_handler(event, context):
     name = 'Alice'
@@ -12,4 +14,5 @@ def face_recognition_handler(event, context):
 
 if __name__ == '__main__':
     print(sys.argv)
-    os.system(f"python face_recognition_modules/eval_face_recognition.py")
+    perform_image_recognition()
+    os.system(f"python eval_face_recognition.py")
