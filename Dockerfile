@@ -73,6 +73,6 @@ WORKDIR "${FUNCTION_DIR}face_recognition_modules/"
 # CMD [ "handler.handler" ]
 #ENTRYPOINT [ "/entry.sh" ]
 #CMD [ "handler.face_recognition_handler" ]
-ENTRYPOINT ["python", "handler.py" ]
+ENTRYPOINT ["python", "lambda_handler.py" ]
 #to pass arguments to the above file, which can be overridden while running the docker image
 #CMD ["--img_path face_recognition_modules/data/test_me/val/angelina_jolie/1.png"]

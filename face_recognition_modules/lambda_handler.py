@@ -1,6 +1,4 @@
-import sys
 from eval_face_recognition import perform_image_recognition
-
 
 def face_recognition_handler(event, context):
     name = 'Alice'
