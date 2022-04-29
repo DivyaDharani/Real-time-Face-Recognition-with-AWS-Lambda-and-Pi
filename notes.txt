@@ -91,7 +91,9 @@ entry.sh: line 6: syntax error near unexpected token `fi'
 entry.sh: line 6: `fi'
 
 Solution:
-Change to EOL format to Unix
+Check cat -e <filename> => This would show file endings
+Change EOL format to Unix (It can be done using Notepad++)
+Check cat -e <filename> to ensure no unusual file endings now
 
 To do:
 python slim image
