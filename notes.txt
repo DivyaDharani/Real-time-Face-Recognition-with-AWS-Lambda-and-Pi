@@ -22,6 +22,10 @@ docker ps
 --Clean up:
 docker system prune
 
+--Testing lambda container images locally
+docker run --rm -p 9000:8080 hello-world
+docker run --rm -p 9000:8080 lambda
+Run test_http_calls.py after running the docker to test the invocation of the lambda function
 
 Working with Lambda container images:
 #Create the necessary policies and attach
@@ -44,8 +48,6 @@ Add a new policy statement with principal:* and the following actions: (https://
     "ecr:InitiateLayerUpload",
     "ecr:PutImage",
     "ecr:UploadLayerPart"
-
-
 
 
 
@@ -84,3 +86,13 @@ def process video:
 	Take the last frame and call recognize_face_and_fetch_details function
 	Return the details (name, major, year)
 
+Issues:
+entry.sh: line 6: syntax error near unexpected token `fi'
+entry.sh: line 6: `fi'
+
+Solution:
+Change to EOL format to Unix
+
+To do:
+python slim image
+Rectify awslambdarice module not found error
