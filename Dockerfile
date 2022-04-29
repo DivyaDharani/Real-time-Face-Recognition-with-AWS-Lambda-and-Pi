@@ -7,7 +7,7 @@ ARG DISTRO_VERSION="3.12"
 
 # Stage 1 - bundle base image + runtime
 # Grab a fresh copy of the image and install GCC
-FROM python:${RUNTIME_VERSION} AS python-alpine
+FROM python:${RUNTIME_VERSION}-slim AS python-alpine
 # Install GCC (Alpine uses musl but we compile and link dependencies with GCC)
 #RUN apk add --no-cache \
 #    libstdc++
