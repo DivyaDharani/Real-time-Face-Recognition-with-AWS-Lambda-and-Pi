@@ -7,7 +7,7 @@ ARG DISTRO_VERSION="3.12"
 
 # Stage 1 - bundle base image + runtime
 # Grab a fresh copy of the image and install GCC
-FROM python:${RUNTIME_VERSION}-slim AS python-alpine
+FROM python:${RUNTIME_VERSION} AS python-alpine
 # Install GCC (Alpine uses musl but we compile and link dependencies with GCC)
 #RUN apk add --no-cache \
 #    libstdc++
@@ -57,22 +57,20 @@ RUN apt-get install -y ffmpeg
 
 # Copy handler function
 COPY requirements.txt ${FUNCTION_DIR}
-#RUN python${RUNTIME_VERSION} -m pip install -r requirements.txt --target ${FUNCTION_DIR}
-RUN python${RUNTIME_VERSION} -m pip install -r requirements.txt
-#COPY entry.sh /
+RUN python${RUNTIME_VERSION} -m pip install -r requirements.txt --target ${FUNCTION_DIR}
+COPY entry.sh ${FUNCTION_DIR}
+#RUN chmod 777 /entry.sh
 
 # Copy function code
 #COPY handler.py ${FUNCTION_DIR}
-#RUN chmod 777 /entry.sh
 
-COPY . .
+COPY face_recognition_modules ${FUNCTION_DIR}
 
-WORKDIR "${FUNCTION_DIR}face_recognition_modules/"
+ENTRYPOINT ["sh", "entry.sh"]
 
 # Set the CMD to your handler (could also be done as a parameter override outside of the Dockerfile)
-# CMD [ "handler.handler" ]
-#ENTRYPOINT [ "/entry.sh" ]
-#CMD [ "handler.face_recognition_handler" ]
-ENTRYPOINT ["python", "lambda_handler.py" ]
-#to pass arguments to the above file, which can be overridden while running the docker image
-#CMD ["--img_path face_recognition_modules/data/test_me/val/angelina_jolie/1.png"]
+CMD [ "lambda_handler.face_recognition_handler" ]
+#CMD: to pass arguments to the entrypoint command, which can be overridden while running the docker image
+
+
+
