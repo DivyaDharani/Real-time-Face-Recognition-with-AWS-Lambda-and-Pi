@@ -38,7 +38,7 @@ def perform_image_recognition(img_path = "./data/test_me/val/angelina_jolie/1.pn
      img_name = img_path.split("/")[-1]
      img_and_result = f"({img_name}, {result})"
      print(f"Image and its recognition result is: {img_and_result}")
-     return img_and_result
+     return result
 
 if __name__ == "__main__":
 
