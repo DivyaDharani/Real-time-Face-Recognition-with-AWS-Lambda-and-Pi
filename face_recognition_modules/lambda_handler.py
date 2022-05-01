@@ -9,7 +9,7 @@ from boto3.dynamodb.conditions import Key
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table('student_table')
 
-def lambda_handler(event, context):
+def face_recognition_handler(event, context):
     print('Face Recognition Handler!!')
     env_var = "AWS_LAMBDA_RUNTIME_API"
     if env_var in os.environ:
@@ -42,7 +42,3 @@ def lambda_handler(event, context):
     result['major']=response['Item']['major']    
 
     return result
-
-# if __name__ == '__main__':
-#     print("The result is: ", perform_image_recognition())
-#     print(face_recognition_handler(None, None))
