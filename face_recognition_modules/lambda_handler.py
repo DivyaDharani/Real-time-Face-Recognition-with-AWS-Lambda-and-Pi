@@ -6,7 +6,7 @@ from eval_face_recognition import perform_image_recognition
 import boto3
 from boto3.dynamodb.conditions import Key
 
-dynamodb = boto3.resource('dynamodb')
+dynamodb = boto3.resource('dynamodb',region_name='us-east-1')
 table = dynamodb.Table('student_table')
 
 def face_recognition_handler(event, context):
@@ -19,11 +19,11 @@ def face_recognition_handler(event, context):
     # name = 'Alice'
     # major = 'Computer Science'
     # year = '2021'
-    print("Event received:", event)
+    # print("Event received:", event)
     # print("Context received:", context)
     file_content=event["body"]
     decode_content=base64.b64decode(file_content)
-    print(decode_content)
+    # print(decode_content)
     
     with open('/tmp/hello.png', 'wb') as f:
         f.write(decode_content)

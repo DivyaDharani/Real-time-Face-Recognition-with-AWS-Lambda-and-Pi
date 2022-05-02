@@ -98,3 +98,9 @@ Check cat -e <filename> to ensure no unusual file endings now
 To do:
 python slim image
 Rectify awslambdarice module not found error
+
+New docker command:
+
+docker build -t my-container --build-arg AWS_DEFAULT_REGION="us-east-1" --bui
+ld-arg AWS_ACCESS_KEY_ID="your_id" --build-arg AWS_SECRET_ACCESS_K
+EY="your_key" .
