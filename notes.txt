@@ -23,9 +23,10 @@ docker ps
 docker system prune
 
 --Testing lambda container images locally
+docker run --rm -p 9000:8080 <name of the docker image already built>
 docker run --rm -p 9000:8080 hello-world
-docker run --rm -p 9000:8080 lambda
 Run test_http_calls.py after running the docker to test the invocation of the lambda function
+
 
 Working with Lambda container images:
 #Create the necessary policies and attach
