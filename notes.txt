@@ -102,6 +102,12 @@ Rectify awslambdarice module not found error
 
 New docker command:
 
-docker build -t my-container --build-arg AWS_DEFAULT_REGION="us-east-1" --bui
-ld-arg AWS_ACCESS_KEY_ID="your_id" --build-arg AWS_SECRET_ACCESS_K
-EY="your_key" .
+docker build -t my-container --build-arg AWS_DEFAULT_REGION="us-east-1" --build-arg AWS_ACCESS_KEY_ID="your_id" --build-arg AWS_SECRET_ACCESS_KEY="your_key" .
+
+Steps to setup in AWS:
+1. Push your container AWS ECR.
+2. Create a Lambda function using the container image from ECR.
+3. Increase Lambda execution timeout and Memory under Configuration settings.
+4. Now create an API gateway(REST), add the above lambda function as trigger, enable lambda proxy integration, add Binary media type 'image/jpeg' under settings tab.
+5. Deploy API.
+6. Use the URL in post2.py.

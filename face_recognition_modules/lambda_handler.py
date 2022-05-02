@@ -41,4 +41,8 @@ def face_recognition_handler(event, context):
     result['year']=response['Item']['year']
     result['major']=response['Item']['major']    
 
-    return result
+    #return result when testing locally.
+    
+    return {
+        'body': json.dumps(result)
+    }    
