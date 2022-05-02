@@ -6,7 +6,7 @@ from eval_face_recognition import perform_image_recognition
 import boto3
 from boto3.dynamodb.conditions import Key
 
-dynamodb = boto3.resource('dynamodb',region_name='us-east-1')
+dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table('student_table')
 
 def face_recognition_handler(event, context):
