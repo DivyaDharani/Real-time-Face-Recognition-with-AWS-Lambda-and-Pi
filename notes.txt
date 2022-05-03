@@ -107,4 +107,4 @@ Steps to setup in AWS:
 4. Attach DynamoDb full access policy to lambda permissions.
 5. Now create an API gateway(REST), add the above lambda function as trigger, enable lambda proxy integration, add Binary media type 'image/jpeg' under settings tab.
 6. Deploy API.
-6. Use the URL in post2.py.
+6. Use the URL in http_post_aws_testing.py.
