@@ -67,8 +67,6 @@ COPY entry.sh ${FUNCTION_DIR}
 
 COPY face_recognition_modules ${FUNCTION_DIR}
 
-ENTRYPOINT ["sh", "entry.sh"]
-
 ARG AWS_DEFAULT_REGION
 ENV AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
 
@@ -77,6 +75,9 @@ ENV AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
 
 ARG AWS_SECRET_ACCESS_KEY
 ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+
+
+ENTRYPOINT ["sh", "entry.sh"]
 
 # Set the CMD to your handler (could also be done as a parameter override outside of the Dockerfile)
 CMD [ "lambda_handler.face_recognition_handler" ]
