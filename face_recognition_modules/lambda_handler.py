@@ -33,11 +33,11 @@ def face_recognition_handler(event, context):
 
     response = table.get_item(
         Key={
-            'name': a
+            'label': a
         }
     )
     result={}
-    result['name']=a
+    result['name']=response['Item']['name']
     result['year']=response['Item']['year']
     result['major']=response['Item']['major']    
 
