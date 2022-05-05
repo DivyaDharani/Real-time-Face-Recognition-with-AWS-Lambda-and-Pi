@@ -3,7 +3,7 @@ import time
 import cv2
 import sys
 import os
-
+import threading
 import boto3
 from botocore.exceptions import ClientError
 import requests
@@ -11,12 +11,14 @@ import requests
 
 TOTAL_VIDEO_DURATION = 60 #in seconds
 SINGLE_VIDEO_DURATION = 0.5
-NUMBER_OF_VIDEOS = int(TOTAL_VIDEO_DURATION / SINGLE_VIDEO_DURATION)
+
 VIDEO_PATH = 'Videos/clip%03d.h264'
 
 #AWS parameters
 URL = "https://5zkt8bff7d.execute-api.us-east-1.amazonaws.com/default/cc-project-lambda"
 S3_BUCKET_NAME = 'cc-project-videos'
+
+threads = []
 
 def capture_frame(video_name):
     vidcap = cv2.VideoCapture(video_name)
@@ -77,35 +79,50 @@ def process_video(video_file_name, start_time):
         print(face_recog_result)
         print("Latency: {:.2f} seconds.".format(latency))
     #---- use multithreading here
-    upload_file(video_file_name, S3_BUCKET_NAME)
+    #upload_file(video_file_name, S3_BUCKET_NAME)
+    t = threading.Thread(target = upload_file, args = (video_file_name, S3_BUCKET_NAME))
+    t.start()
+    threads.append(t)
 
 
-def capture_and_process_video():
+def capture_and_process_video(single_video_duration = SINGLE_VIDEO_DURATION, total_video_duration = TOTAL_VIDEO_DURATION):
+    number_of_videos = int(total_video_duration / single_video_duration)
     #tic = time.perf_counter()
     #print (f'initial tic = {tic}')
     #initial_time = tic
     with picamera.PiCamera() as camera:
         for filename in camera.record_sequence(
-                    VIDEO_PATH % i for i in range(NUMBER_OF_VIDEOS)):
+                    VIDEO_PATH % i for i in range(number_of_videos)):
             print('Recording to %s' % filename)
             start_time = time.time()
-            camera.wait_recording(SINGLE_VIDEO_DURATION)
+            camera.wait_recording(single_video_duration)
             #---- use multithreading here
-            process_video(filename, start_time)  #PROCESSING
+            #process_video(filename, start_time)  #PROCESSING
+            t = threading.Thread(target = process_video, args=(filename, start_time))
+            t.start()
+            threads.append(t)
             # tic = time.perf_counter()
-            # if tic - initial_time >= TOTAL_VIDEO_DURATION:
+            # if tic - initial_time >= total_video_duration:
             #     print (f'final tic = {tic}')
             #     break
 
 
 if __name__ == "__main__":
+
+    single_video_duration = SINGLE_VIDEO_DURATION
+    total_video_duration = TOTAL_VIDEO_DURATION
+
     n = len(sys.argv)
     if n >= 2:
-        SINGLE_VIDEO_DURATION = float(sys.argv[1])
+        single_video_duration = float(sys.argv[1])
     if n >= 3:
-        TOTAL_VIDEO_DURATION = float(sys.argv[2])
+        total_video_duration = float(sys.argv[2])
 
-    #print('Single Video Duration:', SINGLE_VIDEO_DURATION, 'seconds')
-    #print('Total Video Duration:', TOTAL_VIDEO_DURATION, 'seconds')
+    time_start = time.time()
+    capture_and_process_video(single_video_duration, total_video_duration)
 
-    capture_and_process_video()
+    for t in threads:
+        t.join()
+
+    print('Image Recognition Over!!')
+    print('Total code time:', (time.time() - time_start), 'seconds')
