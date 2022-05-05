@@ -33,7 +33,7 @@ def capture_frame(video_name):
     if final_image is not None:
         image_name = video_name.removesuffix('h264') + 'jpg'
         cv2.imwrite(image_name, final_image) # save frame as JPEG file
-        print(f'Saving the final frame number:{count} and name: {image_name}')
+        #print(f'Saving the final frame number:{count} and name: {image_name}')
     return final_image, image_name
 
 def upload_file(file_name, bucket, object_name=None):
@@ -69,30 +69,33 @@ def get_face_recognition_result(image_filename):
     return res.text
 
 
-def process_video(video_file_name):
+def process_video(video_file_name, start_time):
     imageObj, image_file_name = capture_frame(video_file_name)
     if imageObj is not None and image_file_name != '':
         face_recog_result = get_face_recognition_result(image_file_name)
+        latency = time.time() - start_time
         print(face_recog_result)
+        print("Latency: {:.2f} seconds.".format(latency))
     #---- use multithreading here
     upload_file(video_file_name, S3_BUCKET_NAME)
 
 
 def capture_and_process_video():
-    tic = time.perf_counter()
-    print (f'initial tic = {tic}')
-    initial_time = tic
+    #tic = time.perf_counter()
+    #print (f'initial tic = {tic}')
+    #initial_time = tic
     with picamera.PiCamera() as camera:
         for filename in camera.record_sequence(
                     VIDEO_PATH % i for i in range(NUMBER_OF_VIDEOS)):
             print('Recording to %s' % filename)
+            start_time = time.time()
             camera.wait_recording(SINGLE_VIDEO_DURATION)
             #---- use multithreading here
-            process_video(filename)  #PROCESSING
-            tic = time.perf_counter()
-            if tic - initial_time >= TOTAL_VIDEO_DURATION:
-                print (f'final tic = {tic}')
-                break
+            process_video(filename, start_time)  #PROCESSING
+            # tic = time.perf_counter()
+            # if tic - initial_time >= TOTAL_VIDEO_DURATION:
+            #     print (f'final tic = {tic}')
+            #     break
 
 
 if __name__ == "__main__":
@@ -102,7 +105,7 @@ if __name__ == "__main__":
     if n >= 3:
         TOTAL_VIDEO_DURATION = float(sys.argv[2])
 
-    print('Single Video Duration:', SINGLE_VIDEO_DURATION, 'seconds')
-    print('Total Video Duration:', TOTAL_VIDEO_DURATION, 'seconds')
+    #print('Single Video Duration:', SINGLE_VIDEO_DURATION, 'seconds')
+    #print('Total Video Duration:', TOTAL_VIDEO_DURATION, 'seconds')
 
     capture_and_process_video()
