@@ -1,5 +1,7 @@
 COMMANDS:
 ssh cc-project-group-54@192.168.0.10
+project54
+
 raspivid -o ~/Project/Videos/test.h264 -t 500
 ffmpeg -i ~/Project/Videos/test.h264 -r 25 ~/Project/Frames/image-%3d.jpeg
 ffmpeg -i ~/Project/Videos/test.h264 ~/Project/Frames/image-%3d.jpeg
