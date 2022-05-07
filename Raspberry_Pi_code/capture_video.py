@@ -118,11 +118,11 @@ if __name__ == "__main__":
     if n >= 3:
         total_video_duration = float(sys.argv[2])
 
-    time_start = time.time()
+    #time_start = time.time()
     capture_and_process_video(single_video_duration, total_video_duration)
 
     for t in threads:
         t.join()
 
     print('Image Recognition Over!!')
-    print('Total code time:', (time.time() - time_start), 'seconds')
+    #print('Total code time:', (time.time() - time_start), 'seconds')
