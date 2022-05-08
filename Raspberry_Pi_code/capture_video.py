@@ -7,6 +7,7 @@ import threading
 import boto3
 from botocore.exceptions import ClientError
 import requests
+import json
 
 
 TOTAL_VIDEO_DURATION = 60 #in seconds
@@ -19,6 +20,7 @@ URL = "https://5zkt8bff7d.execute-api.us-east-1.amazonaws.com/default/cc-project
 S3_BUCKET_NAME = 'cc-project-videos'
 
 threads = []
+counter = 0
 
 def capture_frame(video_name):
     vidcap = cv2.VideoCapture(video_name)
@@ -68,7 +70,7 @@ def get_face_recognition_result(image_filename):
     res = requests.post(URL,
                          data=data,
                          headers={'Content-Type': 'image/jpeg'})
-    return res.text
+    return res.json()
 
 
 def process_video(video_file_name, start_time):
@@ -76,7 +78,9 @@ def process_video(video_file_name, start_time):
     if imageObj is not None and image_file_name != '':
         face_recog_result = get_face_recognition_result(image_file_name)
         latency = time.time() - start_time
-        print(face_recog_result)
+        global counter
+        counter += 1
+        print(f'{counter} person recognized: {face_recog_result["name"]}, {face_recog_result["major"]}, {face_recog_result["year"]}')
         print("Latency: {:.2f} seconds.".format(latency))
     #---- use multithreading here
     #upload_file(video_file_name, S3_BUCKET_NAME)
