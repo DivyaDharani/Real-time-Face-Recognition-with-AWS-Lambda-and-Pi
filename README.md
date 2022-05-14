@@ -1,5 +1,14 @@
 # Real-time Face Recognition using AWS Lambda, Docker, and Raspberry Pi
 
+This project aims to build a distributed cloud application that utilizes Platform as a
+Service (PaaS) components and Internet of Things (IoT) devices to perform real-time
+face recognition on videos captured by the devices. This is partly an application of Edge
+Computing, which is a form of computing that is done near where the data is sourced,
+minimizing the need to be processed in a remote data center. This project specifically
+uses Raspberry Pi based IoT, AWS services such as Lambda, the first Function as a
+Service (FaaS) platform which facilitates serverless computing, as well as S3 and
+DynamoDB for storage needs, and Docker Engine for creating containers.
+
 ## Setup and Execution
 
 ### S3:
